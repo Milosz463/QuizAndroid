@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private int aktualnePytanie;
     private Button buttonNastepne;
     private Button buttonTak;
+    private Button buttonNie;
 
 
     @Override
@@ -38,15 +39,28 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        buttonNie=findViewById(R.id.button8);
+        buttonNie.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sprawdzToPytanie(false);
+                    }
+                }
+        );
+
         buttonNastepne = findViewById(R.id.button10);
         buttonNastepne.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         aktualnePytanie++;
-                        wstawPytanie(aktualnePytanie);
                         if(aktualnePytanie==listaPytan.size()){
                             buttonNastepne.setVisibility(View.INVISIBLE);
+                            buttonTak.setVisibility(View.INVISIBLE);
+                            buttonNie.setVisibility(View.INVISIBLE);
+                            int ile=podliczPunkty();
+                            textView.setText("Zakonczyles test twoja ilosc punktow wynosi: "+String.valueOf(ile));
                         }else{
                             wstawPytanie(aktualnePytanie);
                         }
@@ -59,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private void sprawdzToPytanie(boolean odpowiedzUzytkownika){
         if(listaPytan.get(aktualnePytanie).isPoprawna()==odpowiedzUzytkownika){
             listaPytan.get(aktualnePytanie).setUdzielonoPoprawnaOdpowiedz(true);
+        }else{
+            listaPytan.get(aktualnePytanie).setUdzielonoPoprawnaOdpowiedz(false);
         }
     }
 
@@ -72,4 +88,15 @@ public class MainActivity extends AppCompatActivity {
         listaPytan.add(new Pytanie("Czy najgrubsze drzewo ma obwod 10m", "Obwod najgrubszego drzewa swiata ma 44 metry", false));
         listaPytan.add(new Pytanie("Czy drzewa sa pochlaniaczem tlenu", "Na czym polega fotosynteza", false));
     }
+
+    private int podliczPunkty(){
+        int ilePunktow=0;
+        for (Pytanie pytanie:listaPytan ){
+            if(pytanie.isUdzielonoPoprawnaOdpowiedz()){
+                ilePunktow++;
+            }
+        }
+        return ilePunktow;
+    }
+
 }
