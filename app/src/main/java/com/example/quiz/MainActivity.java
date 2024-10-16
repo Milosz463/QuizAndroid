@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonNastepne;
     private Button buttonTak;
     private Button buttonNie;
+    private ImageView imageView;
 
 
     @Override
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         wypelnijPytania();
+
+        imageView=findViewById(R.id.imageView);
 
         textView= findViewById(R.id.textViewTrescPytania);
         aktualnePytanie=0;
@@ -84,9 +88,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void wypelnijPytania(){
-        listaPytan.add(new Pytanie("Czy sekwoja moze miec 100m wysokosci", "Sekwoje sa bardzo wysokie", true));
-        listaPytan.add(new Pytanie("Czy najgrubsze drzewo ma obwod 10m", "Obwod najgrubszego drzewa swiata ma 44 metry", false));
-        listaPytan.add(new Pytanie("Czy drzewa sa pochlaniaczem tlenu", "Na czym polega fotosynteza", false));
+        listaPytan.add(new Pytanie("Czy sekwoja moze miec 100m wysokosci", "Sekwoje sa bardzo wysokie", true, R.drawable.duze));
+        listaPytan.add(new Pytanie("Czy najgrubsze drzewo ma obwod 10m", "Obwod najgrubszego drzewa swiata ma 44 metry", false, R.drawable.tlen));
+        listaPytan.add(new Pytanie("Czy drzewa sa pochlaniaczem tlenu", "Na czym polega fotosynteza", false, R.drawable.duze));
+    }
+
+    private void wstawObrazek(int i){
+        Pytanie pytanie = listaPytan.get(i);
+        textView.setText(pytanie.getTresc());
+        imageView.setImageResource(py);
     }
 
     private int podliczPunkty(){
